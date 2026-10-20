@@ -119,6 +119,10 @@ Keep theme values in the root light/dark token blocks, with shared component rul
 
 ## Delivery checklist for the teal/yellow reference refresh
 
+Staff navigation includes a separate **Exception Queue** at `/staff/exception-queue`. Its four priority columns are Critical (stored URGENT), High, Normal and Low. Cards show existing cases and open the staff case detail for action; no drag-and-drop or automatic priority mutation is implied. Counts reflect the current paginated, filtered active-case list, with oldest reports first per column. Preserve all four columns with contained horizontal scrolling on narrow screens.
+
+The bottom staff sidebar includes an **SLA Breach Alert** card. Until resolution-time rules and deadlines exist, display an unavailable count (—), explain that rules are pending, and show no fabricated overdue reports. Priority alone does not establish an SLA breach. Actual overdue counts/report links require a later agreed SLA contract.
+
 - [x] Exact brand values and derived text/hover tokens are used in both themes.
 - [x] Default light, explicit theme switching, reload persistence and blocked-storage fallback are verified.
 - [x] Login, reporter cases/forms/details, staff queue/detail and error/empty states are checked in both themes.
