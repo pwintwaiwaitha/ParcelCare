@@ -18,6 +18,7 @@ import TriageForm from "@/features/recovery-review/TriageForm";
 import CaseDetail from "@/features/case-tracking/CaseDetail";
 import StaffQueue from "@/features/case-tracking/StaffQueue";
 import ThemeToggle from "@/shared/design-system/ThemeToggle";
+import ExceptionBoard from "@/features/case-tracking/ExceptionBoard";
 
 export default function Workspace({ expectedRole }: { expectedRole?: string }) {
   const router = useRouter(),
@@ -36,6 +37,7 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
     [more, setMore] = useState(false);
   const selected = pathname.split("/cases/")[1]?.split("/")[0];
   const reporting = pathname.endsWith("/reports/new");
+  const exceptionQueue = pathname === "/staff/exception-queue";
   const activeRequest = useRef(0);
   const navigate = useCallback(
     (path: string) => {
@@ -187,13 +189,16 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
         </div>
         <nav aria-label="Main navigation">
           <button
-            className={!reporting ? "nav-item active" : "nav-item"}
+            className={!reporting && !exceptionQueue ? "nav-item active" : "nav-item"}
             onClick={() => navigate(base)}
           >
             <Icon name="grid" />
             {staff ? "Case workspace" : "My cases"}
             <span>{cases.length}</span>
           </button>
+          {staff && <button className={exceptionQueue ? "nav-item active" : "nav-item"} onClick={() => navigate(`${base}/exception-queue`)} aria-current={exceptionQueue ? "page" : undefined}>
+            <Icon name="box" />Exception Queue
+          </button>}
           {!staff && (
             <button
               className={reporting ? "nav-item active" : "nav-item"}
@@ -204,6 +209,12 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
             </button>
           )}
         </nav>
+        {staff && <section className="sla-alert-card" aria-label="SLA Breach Alert">
+          <div className="sla-alert-heading"><Icon name="clock" size={18} /><strong>SLA Breach Alert</strong></div>
+          <div className="sla-alert-count"><span aria-label="Breach count unavailable">—</span><span>reports overdue</span></div>
+          <p>Resolution limits aren’t configured yet. Breach counts and overdue reports will appear here once SLA rules are defined.</p>
+          <span className="sla-alert-status">SLA rules pending</span>
+        </section>}
         <div className="sidebar-note">
           <Icon name="shield" />
           <strong>Support workspace</strong>
@@ -238,7 +249,7 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                 : selected
                   ? "Case details"
                   : staff
-                    ? "Exception queue"
+                    ? exceptionQueue ? "Exception Queue" : "Case workspace"
                     : "My cases"}
             </strong>
           </span>
@@ -320,10 +331,10 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                   <div className="eyebrow">
                     {staff ? "OPERATIONS" : "DELIVERY SUPPORT"}
                   </div>
-                  <h1>{staff ? "Exception workspace" : "My cases"}</h1>
+                  <h1>{staff ? exceptionQueue ? "Exception Queue" : "Exception workspace" : "My cases"}</h1>
                   <p>
                     {staff
-                      ? "Review reports, set priorities, and keep everyone in the loop."
+                      ? exceptionQueue ? "Work through active tickets by priority. Open a ticket to review and take action." : "Review reports, set priorities, and keep everyone in the loop."
                       : "Report an issue and follow your support team’s progress, all in one place."}
                   </p>
                 </div>
@@ -365,7 +376,7 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                 <div className="panel-heading">
                   <div>
                     <h2>
-                      {staff ? "Exception queue" : "Your cases"}{" "}
+                      {staff ? exceptionQueue ? "Priority board" : "Case workspace" : "Your cases"}{" "}
                       <span className="count">{cases.length}</span>
                     </h2>
                     <p>
@@ -415,7 +426,9 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                     Refresh
                   </button>
                 </div>
-                {visible.length ? (
+                {staff && exceptionQueue ? (
+                  <><p className="queue-scope-note">Counts reflect active cases on this page and your filters. Critical displays Urgent priority. Resolved cases are excluded.</p><ExceptionBoard items={visible} onOpen={id => navigate(`${base}/cases/${id}`)} /></>
+                ) : visible.length ? (
                   staff ? (
                     <StaffQueue
                       items={visible}

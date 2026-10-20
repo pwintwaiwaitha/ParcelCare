@@ -1574,3 +1574,37 @@ select:focus,
 textarea:focus {
   background: var(--surface);
 }
+
+.exception-board { display: grid; grid-template-columns: repeat(4, minmax(240px, 1fr)); gap: 16px; padding: 20px; overflow-x: auto; align-items: start; }
+.exception-column { background: var(--surface-muted); border: 1px solid var(--line); border-radius: 14px; padding: 14px; min-width: 0; }
+.exception-column-heading, .exception-column-heading h2, .exception-ticket-top, .sla-alert-heading { display: flex; align-items: center; gap: 8px; }
+.exception-column-heading, .exception-ticket-top { justify-content: space-between; }
+.exception-column-heading h2 { font-size: 16px; margin: 0; }
+.queue-priority-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--brand-ink); }
+.exception-column--critical .queue-priority-dot { background: var(--danger-ink); }
+.exception-column--high .queue-priority-dot { background: var(--warning-ink); }
+.exception-column--low .queue-priority-dot { background: var(--muted); }
+.queue-column-note, .queue-scope-note { color: var(--muted); font-size: 13px; }
+.queue-scope-note { padding: 0 20px; margin-top: 16px; }
+.queue-column-note { margin: 8px 0 16px; }
+.exception-tickets { display: grid; gap: 12px; }
+.exception-ticket { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.exception-ticket-top { flex-wrap: wrap; font-size: 13px; }
+.exception-ticket h3 { margin: 16px 0 6px; font-size: 16px; }
+.exception-ticket > p { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+.exception-ticket dl { margin: 16px 0; font-size: 13px; display: grid; gap: 10px; }
+.exception-ticket dt { color: var(--muted); }
+.exception-ticket dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+.exception-ticket .button { width: 100%; }
+.queue-column-empty { padding: 26px 8px; text-align: center; color: var(--muted); font-size: 14px; }
+.sla-alert-card { width: 100%; border: 1px solid var(--warning-ink); background: var(--warning-bg); color: var(--warning-ink); border-radius: 14px; padding: 14px; order: 4; }
+.sla-alert-heading { font-size: 14px; }
+.sla-alert-count { display: flex; align-items: baseline; gap: 8px; margin: 12px 0; font-size: 13px; }
+.sla-alert-count > span:first-child { font-size: 28px; font-weight: 600; }
+.sla-alert-card p { font-size: 13px; line-height: 1.5; margin: 8px 0 12px; }
+.sla-alert-status { font-size: 13px; font-weight: 600; }
+@media (min-width: 1024px) {
+  .app-shell--staff .sla-alert-card { order: initial; margin-top: auto; }
+  .app-shell--staff .sla-alert-card + .sidebar-note { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .exception-ticket { scroll-behavior: auto; } }
