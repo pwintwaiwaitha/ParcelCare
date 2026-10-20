@@ -19,18 +19,20 @@ ACCOUNTS = [
 def migrate():
     if engine.dialect.name == 'sqlite':
         Base.metadata.create_all(engine); print('Local schema ready.'); return
-    migration = Path(__file__).resolve().parents[1] / 'migrations' / '001_reporting.sql'
+    migrations = Path(__file__).resolve().parents[1] / 'migrations'
     with engine.begin() as connection:
         # Serialize simultaneous first deploys and record exactly which SQL was applied.
         connection.execute(text('SELECT pg_advisory_xact_lock(74267123)'))
         connection.execute(text('CREATE TABLE IF NOT EXISTS parcelcare_migrations (version text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())'))
         connection.execute(text('ALTER TABLE parcelcare_migrations ENABLE ROW LEVEL SECURITY'))
         connection.execute(text('REVOKE ALL ON TABLE parcelcare_migrations FROM anon, authenticated'))
-        if not connection.scalar(text("SELECT version FROM parcelcare_migrations WHERE version='001'")):
-            for statement in migration.read_text(encoding='utf-8').split(';'):
-                if statement.strip(): connection.execute(text(statement))
-            connection.execute(text("INSERT INTO parcelcare_migrations(version) VALUES ('001')"))
-    print('Migration 001 applied or already present.')
+        for migration in sorted(migrations.glob('[0-9][0-9][0-9]_*.sql')):
+            version = migration.name.split('_')[0]
+            if not connection.scalar(text('SELECT version FROM parcelcare_migrations WHERE version=:v'), {'v':version}):
+                for statement in migration.read_text(encoding='utf-8').split(';'):
+                    if statement.strip(): connection.execute(text(statement))
+                connection.execute(text('INSERT INTO parcelcare_migrations(version) VALUES (:v)'), {'v':version})
+    print('Schema migrations applied or already present.')
 
 def seed():
     password = config.DEMO_PASSWORD

@@ -1,6 +1,7 @@
 import type { Detail } from "@/shared/api/types";
 import { Icon, Badge } from "@/shared/design-system/ui";
 import { label, date } from "@/shared/design-system/format";
+import AIReviewPanel from "./AIReviewPanel";
 export default function CaseDetail({
   item,
   staff,
@@ -78,6 +79,7 @@ export default function CaseDetail({
               </div>
             )}
           </section>
+          {staff && <AIReviewPanel key={item.id} caseId={item.id} version={item.version} />}
           <section className="panel detail-panel timeline-panel">
             <div className="panel-heading">
               <h2>Case timeline</h2>

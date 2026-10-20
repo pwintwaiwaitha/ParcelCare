@@ -13,6 +13,8 @@ SECRET_KEY = os.getenv('SUPABASE_SECRET_KEY', '')
 BUCKET = os.getenv('EVIDENCE_BUCKET', 'parcelcare-evidence')
 SESSION_SECRET = os.getenv('SESSION_SECRET', '')
 DEMO_PASSWORD = os.getenv('DEMO_PASSWORD', '')
+GROQ_API_KEY = os.getenv('GROQ_API_KEY', '').strip()
+GROQ_MODEL = os.getenv('GROQ_MODEL', 'openai/gpt-oss-20b')
 def privileged_headers():
     # New sb_secret keys belong in apikey; legacy service-role JWTs also work as bearer tokens.
     headers = {'apikey': SECRET_KEY}
