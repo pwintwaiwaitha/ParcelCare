@@ -3,6 +3,7 @@ import { useState } from "react";
 import { api } from "@/shared/api/client";
 import type { User } from "@/shared/api/types";
 import { Brand, Icon, ErrorNotice } from "./ui";
+import ThemeToggle from "./ThemeToggle";
 export default function Login({
   onLogin,
   initialError,
@@ -32,6 +33,9 @@ export default function Login({
   }
   return (
     <div className="login">
+      <div className="login-theme">
+        <ThemeToggle />
+      </div>
       <section className="login-story">
         <Brand />
         <div className="login-copy">

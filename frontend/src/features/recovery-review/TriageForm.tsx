@@ -129,8 +129,7 @@ export default function TriageForm({
         </button>
       </fieldset>
       <div className="field-help">
-        Resolution is available only after verified recovery, in a later
-        milestone.
+        Cases stay open until the recovery outcome is verified.
       </div>
     </form>
   );

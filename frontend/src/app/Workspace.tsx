@@ -16,6 +16,8 @@ import Login from "@/shared/design-system/Login";
 import ReportForm from "@/features/exception-reporting/ReportForm";
 import TriageForm from "@/features/recovery-review/TriageForm";
 import CaseDetail from "@/features/case-tracking/CaseDetail";
+import StaffQueue from "@/features/case-tracking/StaffQueue";
+import ThemeToggle from "@/shared/design-system/ThemeToggle";
 
 export default function Workspace({ expectedRole }: { expectedRole?: string }) {
   const router = useRouter(),
@@ -173,7 +175,9 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
   );
   const base = `/${user.role}`;
   return (
-    <div className="app-shell">
+    <div
+      className={`app-shell ${staff ? "app-shell--staff" : "app-shell--reporter"}`}
+    >
       <aside className="sidebar">
         <Brand />
         <div className="workspace-label">
@@ -202,11 +206,11 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
         </nav>
         <div className="sidebar-note">
           <Icon name="shield" />
-          <strong>A clear path forward.</strong>
+          <strong>Support workspace</strong>
           <p>
-            Every report has a place.
+            Review cases and keep
             <br />
-            Every update stays connected.
+            reporters informed.
           </p>
         </div>
         <div className="profile">
@@ -238,9 +242,12 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                     : "My cases"}
             </strong>
           </span>
-          <div className="live-indicator">
-            <i />
-            {user.local_demo ? "Local test mode" : "Shared workspace"}
+          <div className="topbar-actions">
+            <div className="live-indicator">
+              <i />
+              {user.local_demo ? "Local test mode" : "Shared workspace"}
+            </div>
+            <ThemeToggle />
           </div>
         </header>
         <main>
@@ -311,15 +318,9 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
               <div className="page-heading">
                 <div>
                   <div className="eyebrow">
-                    {staff
-                      ? "A LITTLE CLARITY. A BETTER DELIVERY."
-                      : "YOUR DELIVERIES, LOOKED AFTER."}
+                    {staff ? "OPERATIONS" : "DELIVERY SUPPORT"}
                   </div>
-                  <h1>
-                    {staff
-                      ? "Exception workspace"
-                      : "Let’s keep things moving."}
-                  </h1>
+                  <h1>{staff ? "Exception workspace" : "My cases"}</h1>
                   <p>
                     {staff
                       ? "Review reports, set priorities, and keep everyone in the loop."
@@ -382,7 +383,7 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                     <Icon name="search" />
                     <input
                       aria-label="Search cases on this page"
-                      placeholder="Search tracking ID or issue…"
+                      placeholder="Search this page by tracking ID or issue…"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
@@ -415,35 +416,42 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                   </button>
                 </div>
                 {visible.length ? (
-                  <div className="case-list">
-                    {visible.map((c) => (
-                      <button
-                        className="case-row"
-                        key={c.id}
-                        onClick={() => navigate(`${base}/cases/${c.id}`)}
-                      >
-                        <span className="case-symbol">
-                          <Icon />
-                        </span>
-                        <span className="case-primary">
-                          <strong>{label(c.category)}</strong>
-                          <small>
-                            {c.tracking_id} <span>·</span> {c.shipment_label}
-                          </small>
-                        </span>
-                        <span className="case-status">
-                          <Badge value={c.status} />
-                          <small>{date(c.updated_at)} MMT</small>
-                        </span>
-                        <span
-                          className={`priority priority-${c.priority.toLowerCase()}`}
+                  staff ? (
+                    <StaffQueue
+                      items={visible}
+                      onOpen={(id) => navigate(`${base}/cases/${id}`)}
+                    />
+                  ) : (
+                    <div className="case-list">
+                      {visible.map((c) => (
+                        <button
+                          className="case-row"
+                          key={c.id}
+                          onClick={() => navigate(`${base}/cases/${c.id}`)}
                         >
-                          {label(c.priority)}
-                        </span>
-                        <Icon name="arrow" size={18} />
-                      </button>
-                    ))}
-                  </div>
+                          <span className="case-symbol">
+                            <Icon />
+                          </span>
+                          <span className="case-primary">
+                            <strong>{label(c.category)}</strong>
+                            <small>
+                              {c.tracking_id} <span>·</span> {c.shipment_label}
+                            </small>
+                          </span>
+                          <span className="case-status">
+                            <Badge value={c.status} />
+                            <small>{date(c.updated_at)} MMT</small>
+                          </span>
+                          <span
+                            className={`priority priority-${c.priority.toLowerCase()}`}
+                          >
+                            {label(c.priority)}
+                          </span>
+                          <Icon name="arrow" size={18} />
+                        </button>
+                      ))}
+                    </div>
+                  )
                 ) : (
                   <div className="empty">
                     <span className="empty-icon">

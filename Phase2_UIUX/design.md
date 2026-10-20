@@ -6,21 +6,21 @@ Status: reporting/triage screens implemented and smoke-tested locally; recovery 
 Apply MengTo's [design-first-ui-prompting](https://github.com/MengTo/Skills/blob/main/agent-skills/ui/design-first-ui-prompting/SKILL.md): define persona, success criteria, layout, typography, color, copy and constraints before screen generation. Reviewed for this revision; not installed locally. Game, shader, 3D and marketing-page workflows are outside this operational application's needs.
 
 ## Shared design constraints
-Minimal operational UI. Proposed tokens: background #F8FAFC, surface #FFFFFF, text #0F172A, primary action #1D4ED8; spacing 4/8/12/16/24/32px. System sans-serif, body 16px with 1.5 line height, headings 24-32px at weight 600. Use blue as action accent; status colors always have text/icon labels.
+Canonical visual rules now live in [DESIGN.md](../DESIGN.md): customer/rider mobile-first shells, staff desktop-first queue and case layout, shared type/color/spacing tokens, readable supporting text, and visual acceptance checks. It supersedes the earlier proposed palettes and inconsistent first-release typography. Body/report/timeline text is 16px, labels/table data 14px, supporting captions at least 13px. User-selected brand colors are teal #08A6A5 and yellow #FCC829; support light/dark themes, default light, with independent semantic status colors and contrast-derived text/hover variants.
 
 Shared UI and formatting belong in frontend/src/shared/design-system/. The first release uses semantic React controls and shared CSS variables in frontend/src/app/globals.css, with a navy/teal palette, instead of adding Tailwind/shadcn before the first flow is testable. This is an implementation simplification, not a claim those libraries are installed. Check WCAG AA text contrast, keyboard focus, associated labels and actionable inline errors; honor reduced motion. Full accessibility acceptance remains pending.
 
 ## Customer: mobile first
 Routes: /customer, /customer/reports/new, /customer/cases/[caseId].
 
-Single column from 320px, 16px side padding, minimum 44px touch targets and full-width primary actions; no horizontal page scroll. Bottom navigation: Home and Cases; account for device safe areas. A small authenticated identity/sign-out menu replaces a full account-management feature in the MVP. Add /customer/cases for the case list.
+Single column from 320px, 16px side padding, minimum 44px touch targets and full-width primary actions; no horizontal page scroll. For the implemented reporting flow, bottom navigation is Cases and Report, with safe-area padding. At tablet/desktop sizes, navigation moves into the header. A small authenticated identity/sign-out menu replaces full account management. Add /customer/cases for the case list.
 
 Home shows deliveries and case summaries. Report flow: tracking ID -> issue -> description/evidence -> review -> submit. Show upload progress, retry and camera-permission alternatives. Case detail shows plain-language status, timeline and one next action. Address confirmation displays the proposed address and requires explicit customer confirmation before scheduling.
 
 ## Rider: mobile first
 Routes: /rider, /rider/reports/new, /rider/tasks/[taskId].
 
-Same mobile spacing and touch constraints. Bottom navigation: Tasks and Report; authenticated identity/sign-out is available in the header. Prioritize destination, task state and next action. Failed-attempt report captures tracking ID, issue, notes and optional evidence. Completion requires proof; blockers capture a reason and alert staff. Distinguish proof submitted from outcome verified.
+Same mobile spacing and touch constraints. Current reporting milestone uses Cases and Report navigation; Tasks appears when task behavior is implemented. Authenticated identity/sign-out is available in the header. Future task screens prioritize destination, task state and next action. Failed-attempt report captures tracking ID, issue, notes and optional evidence. Future completion requires proof; blockers capture a reason and alert staff. Distinguish proof submitted from outcome verified.
 
 On network failure preserve current form in memory while the page remains open, warn before navigating away and provide explicit retry. Do not claim offline submission or store sensitive evidence in browser storage. Backend idempotency prevents duplicate retries.
 

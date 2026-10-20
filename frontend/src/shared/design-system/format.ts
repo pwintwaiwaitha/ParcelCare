@@ -14,8 +14,11 @@ export const LABELS: Record<string, string> = {
   LOST: "Parcel lost",
   ACCESS: "Delivery access issue",
 };
-export const label = (value: string) =>
-  LABELS[value] || value.toLowerCase().replaceAll("_", " ");
+export const label = (value: string) => {
+  if (LABELS[value]) return LABELS[value];
+  const text = value.toLowerCase().replaceAll("_", " ");
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
 export const date = (value: string) =>
   new Intl.DateTimeFormat("en-GB", {
     day: "numeric",

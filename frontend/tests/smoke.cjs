@@ -15,8 +15,14 @@ const settings = Object.fromEntries(
 );
 const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3000";
 const liveSupabase = process.argv.includes("--supabase");
-if (settings.APP_ENV !== "local" || (settings.AUTH_MODE !== "local" && !(liveSupabase && settings.AUTH_MODE === "supabase")))
-  throw Error("Use local synthetic data, or explicitly pass --supabase for the configured demo project.");
+if (
+  settings.APP_ENV !== "local" ||
+  (settings.AUTH_MODE !== "local" &&
+    !(liveSupabase && settings.AUTH_MODE === "supabase"))
+)
+  throw Error(
+    "Use local synthetic data, or explicitly pass --supabase for the configured demo project.",
+  );
 const issues = [];
 async function login(browser, role, width) {
   const context = await browser.newContext({
@@ -25,6 +31,10 @@ async function login(browser, role, width) {
   const page = await context.newPage();
   page.on("pageerror", (error) => issues.push(error.message));
   await page.goto(base);
+  const theme = process.env.TEST_THEME || "light";
+  if (await page.locator("html").getAttribute("data-theme") !== theme) {
+    await page.getByRole("button", { name: `Switch to ${theme} theme` }).click();
+  }
   await page
     .getByLabel("Email address")
     .fill(
@@ -39,8 +49,7 @@ async function login(browser, role, width) {
   assert.equal(identity.local_demo, !liveSupabase);
   await page
     .getByRole("heading", {
-      name:
-        role === "staff" ? "Exception workspace" : "Let’s keep things moving.",
+      name: role === "staff" ? "Exception workspace" : "My cases",
     })
     .waitFor();
   return { context, page };
