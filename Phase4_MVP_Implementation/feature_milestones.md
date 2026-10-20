@@ -41,7 +41,7 @@ Human feature owners and teammate test results remain UNASSIGNED/pending. Fronte
 | --- | --- | --- | --- |
 | M0 | Render deployment, seeded sign-in, three role shells, persistent shipment access | Hosting/data setup | DEPLOYED / TESTING — teammate acceptance pending |
 | M1 | Customer/rider reporting, evidence, staff triage, own-case tracking | M0 | DEPLOYED / TESTING — teammate acceptance pending |
-| M2 | Live structured AI triage with seven checks and manual fallback | M1 | BUILDING — Groq backend/UI implemented; deployment and team acceptance pending |
+| M2 | Live structured AI triage with seven checks and manual fallback | M1 | DEPLOYED / TESTING — live Render browser verification passed; team acceptance pending |
 | M3 | Wrong-address recovery through verified redelivery | M2 | NOT STARTED |
 | M4 | Complete manual recovery, duplicate review and reopening paths | M3 | NOT STARTED |
 | M5 | Wrong-item seller simulation, return then replacement | M4 | NOT STARTED |
@@ -72,13 +72,18 @@ Human feature owners and teammate test results remain UNASSIGNED/pending. Fronte
 
 ### M2 — seven AI checks
 
-- [ ] Specify input snapshot and output schema: classification, summary, priority suggestion, missing fields, duplicate candidates, evidence consistency, next action; uncertainty and source references accompany findings.
-- [ ] Persist recommendation/proposal version, input version, model/prompt version and review errors; all seven checks visible to staff.
-- [ ] Call OpenAI on backend with schema validation; treat reports/messages as untrusted content, never as authority to execute tools.
-- [ ] Evidence not actually inspected is marked NOT ASSESSED; do not claim photo consistency from filenames or metadata alone.
-- [ ] Model timeout/invalid output leaves visible pending/failed review and a manual route. A fixture is labeled and never counted as live AI.
-- [ ] Test samples: clear wrong address, missing details, potential duplicate, contradictory evidence and manual-only category. Staff can correct classification/priority with an audit event.
+- [x] Specify input snapshot and output schema: classification, summary, priority suggestion, missing fields, duplicate candidates, evidence consistency, next action; uncertainty and source references accompany findings.
+- [x] Persist each review with a unique ID, input snapshot/fingerprint and case version, model/prompt version and review errors; all seven checks visible to staff. Recovery proposals remain M3 work.
+- [x] Call Groq on the backend with schema and source-reference validation; treat reports/messages as untrusted content, never as authority to execute tools. Groq replaces the originally planned OpenAI API provider by user choice.
+- [x] Evidence not actually inspected is marked NOT ASSESSED; do not claim photo consistency from filenames or metadata alone.
+- [x] Model timeout/invalid output leaves visible pending/failed review and a manual route. Verification used real Groq output plus mocked failure tests; no fixture is presented as live AI.
+- [x] Automated verification: 13 backend tests passed; frontend production build passed; deployed browser test verified a real seven-check review, persistence after reload, staff-only access, both themes and no case status/version change.
+- [ ] Complete the representative evaluation set: clear wrong address, missing details, potential duplicate, contradictory reports/evidence and manual-only category. Live wrong-address/missing-apartment review and automated invalid-reference/failure checks passed; the full evaluation set remains pending.
+- [x] Staff can correct priority through existing audited triage.
+- [ ] Staff can correct classification with an audit event; category editing is not implemented yet.
 - [ ] Team test: generate real review, inspect seven outputs, force provider failure, confirm no recovery side effect occurs.
+
+Verification recorded 2026-10-20 against deployed feature commit 87709a1. M2 remains DEPLOYED / TESTING until the remaining evaluation, classification correction and teammate acceptance are complete. See [M2 runtime contract and verification](../docs/m2-ai-review.md).
 
 ### M3 — wrong-address recovery end to end
 
