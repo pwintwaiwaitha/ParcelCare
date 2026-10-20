@@ -15,8 +15,14 @@ const settings = Object.fromEntries(
 );
 const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3000";
 const liveSupabase = process.argv.includes("--supabase");
-if (settings.APP_ENV !== "local" || (settings.AUTH_MODE !== "local" && !(liveSupabase && settings.AUTH_MODE === "supabase")))
-  throw Error("Use local synthetic data, or explicitly pass --supabase for the configured demo project.");
+if (
+  settings.APP_ENV !== "local" ||
+  (settings.AUTH_MODE !== "local" &&
+    !(liveSupabase && settings.AUTH_MODE === "supabase"))
+)
+  throw Error(
+    "Use local synthetic data, or explicitly pass --supabase for the configured demo project.",
+  );
 const issues = [];
 async function login(browser, role, width) {
   const context = await browser.newContext({
@@ -39,8 +45,7 @@ async function login(browser, role, width) {
   assert.equal(identity.local_demo, !liveSupabase);
   await page
     .getByRole("heading", {
-      name:
-        role === "staff" ? "Exception workspace" : "Let’s keep things moving.",
+      name: role === "staff" ? "Exception workspace" : "My cases",
     })
     .waitFor();
   return { context, page };

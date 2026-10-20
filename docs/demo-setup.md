@@ -1,6 +1,6 @@
 # First-flow demo setup and review
 
-Status: implemented and tested locally against live Supabase Auth/PostgreSQL/Storage; not deployed to Render or team-accepted. Render account setup/access is still required. This release needs no OpenAI key.
+Status: deployed at https://parcelcare-web.onrender.com with backend https://parcelcare-api.onrender.com and live Supabase Auth/PostgreSQL/Storage. Endpoint readiness checks pass; browser verification and team acceptance are recorded in Phase4_MVP_Implementation/first_flow_review.md. This release needs no OpenAI key.
 
 ## Check the running local app
 
@@ -86,4 +86,4 @@ The frontend uses a same-origin API proxy so sign-in cookies work across separat
 - Browser checks cover customer/rider 320/375/390/768px and staff 768/1024/1440px without horizontal page overflow. This is a smoke check, not a full screen-reader audit.
 - Screenshots are local ignored artifacts: frontend/artifacts/customer-case-mobile.png and staff-triage-desktop.png.
 
-The full browser smoke also passed against live Supabase using `node tests/smoke.cjs --supabase`: real sign-in, reporting, staff triage, polling, refresh persistence, private notes/evidence and role isolation. RLS and private bucket settings were checked live. Actual Render deployment/cold starts and teammate acceptance remain unverified. OpenAI, recovery execution, seller simulation, messages/replies, manual task completion and reopening belong to later milestones.
+The full browser smoke passed against live Supabase and again against https://parcelcare-web.onrender.com using TEST_BASE_URL and `node tests/smoke.cjs --supabase`: real sign-in, reporting, staff triage, polling, refresh persistence, private notes/evidence and role isolation. RLS and private bucket settings were checked live. Prolonged-idle cold-start behavior, full accessibility review and teammate acceptance remain unverified. OpenAI, recovery execution, seller simulation, messages/replies, manual task completion and reopening belong to later milestones.

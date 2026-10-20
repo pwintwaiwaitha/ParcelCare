@@ -117,8 +117,7 @@ export default function ReportForm({
             </select>
           </label>
           <p className="field-help">
-            All reports receive staff review. Automated recovery is not part of
-            this first release.
+            Your support team will review your report and keep you updated.
           </p>
           <div className="form-section-title second">
             <span>02</span>

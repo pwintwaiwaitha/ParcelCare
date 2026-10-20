@@ -1,6 +1,6 @@
 # Phase 4 - MVP implementation checklist
 
-Status: first reporting/triage flow implemented and tested from the local app against live Supabase Auth/PostgreSQL/Storage, including concurrent retry/version checks. Render deployment, team acceptance and later recovery milestones remain pending. See [setup](../docs/demo-setup.md) and [contract](../docs/first-flow-contract.md).
+Status: first reporting/triage flow deployed on Render and browser-tested against live Supabase Auth/PostgreSQL/Storage. Local policy tests and live PostgreSQL concurrent retry/version checks also passed. Team acceptance and later recovery milestones remain pending. See [setup](../docs/demo-setup.md) and [contract](../docs/first-flow-contract.md).
 
 Execution tracker: [feature milestones and team testing](feature_milestones.md). Deliver each usable flow through requirements, screen design, technical contracts, implementation, deployment and every teammate's test before marking it accepted. Initial two-hour target is deployed reporting/triage, not the complete recovery MVP.
 

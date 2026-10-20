@@ -1,10 +1,10 @@
 # Feature milestones and team test tracker
 
-Planned 2026-10-20 (Asia/Rangoon). Status: M0/M1 implemented and tested locally; hosted Supabase/Render work and team acceptance are pending. No deployment or team test is claimed. This supplements build_plan.md; it does not replace the four phase specifications. Setup: [demo guide](../docs/demo-setup.md); detailed contracts: [first flow](../docs/first-flow-contract.md).
+Updated 2026-10-20 (Asia/Rangoon). Status: M0/M1 deployed on Render with live Supabase. Frontend/API readiness checks pass; deployed browser checks and teammate acceptance are tracked in first_flow_review.md. No teammate acceptance is claimed. This supplements build_plan.md; it does not replace the four phase specifications. Setup: [demo guide](../docs/demo-setup.md); detailed contracts: [first flow](../docs/first-flow-contract.md).
 
 ## Agreed scope
 
-User accepted: staff can complete recovery manually inside ParcelCare after declining AI; wrong-item demo uses one return-then-replacement sequence; broader source exception categories are selectable and enter manual triage. Automated recovery remains limited to the PDF MVP. Render is the deployment target; GitHub repository exists; Supabase and OpenAI are not integrated yet. Hosting account access and funded service availability remain unverified.
+User accepted: staff can complete recovery manually inside ParcelCare after declining AI; wrong-item demo uses one return-then-replacement sequence; broader source exception categories are selectable and enter manual triage. Automated recovery remains limited to the PDF MVP. Supabase Auth/PostgreSQL/Storage are integrated, and both app services are deployed on Render. OpenAI integration remains M2 work. Deployment uses the user's htoomyatmineain/ParcelCare repository; the local origin still points to the original team repository.
 
 ## First two-hour release
 
@@ -33,12 +33,12 @@ Status vocabulary: NOT STARTED -> SPEC READY -> BUILDING -> DEPLOYED / TESTING -
 
 ## Milestone board
 
-All owners are currently UNASSIGNED; all deployment URLs and test results are pending.
+Human feature owners and teammate test results remain UNASSIGNED/pending. Frontend: https://parcelcare-web.onrender.com ; backend: https://parcelcare-api.onrender.com . Record Render's actual deployed commit SHA during team testing; the reviewed source baseline is d6efa5a.
 
 | ID | Usable milestone / MVP feature | Depends on | Status |
 | --- | --- | --- | --- |
-| M0 | Render deployment, seeded sign-in, three role shells, persistent shipment access | Hosting/data setup | BUILDING — live Supabase verified; Render pending |
-| M1 | Customer/rider reporting, evidence, staff triage, own-case tracking | M0 | BUILDING — Supabase-backed browser test passed; Render/team tests pending |
+| M0 | Render deployment, seeded sign-in, three role shells, persistent shipment access | Hosting/data setup | DEPLOYED / TESTING — teammate acceptance pending |
+| M1 | Customer/rider reporting, evidence, staff triage, own-case tracking | M0 | DEPLOYED / TESTING — teammate acceptance pending |
 | M2 | Live structured AI triage with seven checks and manual fallback | M1 | NOT STARTED |
 | M3 | Wrong-address recovery through verified redelivery | M2 | NOT STARTED |
 | M4 | Complete manual recovery, duplicate review and reopening paths | M3 | NOT STARTED |
@@ -49,23 +49,24 @@ All owners are currently UNASSIGNED; all deployment URLs and test results are pe
 ### M0 — deployed foundation
 
 - [x] Initialize pinned Next.js/TypeScript and FastAPI runtimes with reproducible startup/build instructions and secret-free environment examples.
-- [ ] Connect GitHub to Render: frontend Node web service rooted at frontend/, FastAPI web service rooted at backend/; record actual working commands.
-- [ ] Configure frontend API URL, backend allowed frontend origin, health check and backend-only secrets.
-- [ ] Create Supabase migrations and synthetic seed data; seed customer A/B, rider A/B and staff identities with trusted role mappings.
-- [ ] Sign-in/sign-out and role routes; backend validates identity and scopes shipment reads. A route/role picker grants no permissions.
-- [ ] Restrict direct database/storage access; keep privileged keys out of frontend assets.
+- [x] Connect GitHub to Render: frontend Node web service rooted at frontend/, FastAPI web service rooted at backend/; record actual working commands.
+- [x] Configure the server-side frontend API proxy, same-origin request verification, health check and backend-only secrets.
+- [x] Create Supabase migrations and synthetic seed data; seed customer A/B, rider A/B and staff identities with trusted role mappings.
+- [x] Sign-in/sign-out and role routes; backend validates identity and scopes shipment reads. A route/role picker grants no permissions.
+- [x] Restrict direct database/storage access; keep privileged keys out of frontend assets.
 - [ ] Team test: open remote URL, sign in by role, see only permitted shipments; sign out; verify refresh and backend health.
 
 ### M1 — report to staff triage and reporter timeline
 
 - [x] Freeze report fields: tracking ID, source actor, category, description, evidence references, idempotency key; define response with case ID and preserve individual report IDs in case detail. See first-flow contract.
-- [ ] Customer and assigned rider can submit reports; all source categories selectable, with manual-only labels outside MVP recovery scope.
-- [ ] Create report/case/event transactionally; exact retries return prior result; changed payload with same key returns conflict.
-- [ ] Initial conservative matching: only deterministic same-context matches attach automatically; ambiguous reports remain separate and flagged until M4 review. Preserve every report.
-- [ ] Private evidence upload/download with ownership, type and size checks; handle upload failure without losing the form while open.
-- [ ] Staff queue/detail with owner, category, priority, status, triage and manual flag; reporter sees scoped case timeline with polling.
-- [ ] Loading/empty/validation/network states; no internal notes or another reporter's evidence exposed.
+- [x] Customer and assigned rider can submit reports; all source categories selectable, with manual-only labels outside MVP recovery scope.
+- [x] Create report/case/event transactionally; exact retries return prior result; changed payload with same key returns conflict.
+- [x] Initial conservative matching: only deterministic same-context matches attach automatically; ambiguous reports remain separate and flagged until M4 review. Preserve every report.
+- [x] Private evidence upload/download with ownership, type and size checks; handle upload failure without losing the form while open.
+- [x] Staff queue/detail with owner, category, priority, status, triage and manual flag; reporter sees scoped case timeline with polling.
+- [x] Loading/empty/validation/network states; no internal notes or another reporter's evidence exposed.
 - [ ] Team test: submit customer and rider reports, see them as staff, triage, see permitted update as reporter, retry once, refresh, and attempt another customer's case/evidence URL.
+
 
 ### M2 — seven AI checks
 
