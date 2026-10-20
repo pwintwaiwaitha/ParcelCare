@@ -1,0 +1,131 @@
+ParcelCare | Autonomous Recovery Workflow
+
+Mentor discussion brief · Updated proposal: AI recommends first, authorized humans opt in, then the
+agent executes and follows up.
+
+01 System workflow
+
+                                                                  1 · Exception reported
+                     Customer complaint OR rider failed-attempt report; tracking ID, details and optional photo evidence
+
+                                                                2 · Create or match case
+                  Use tracking ID plus issue context to merge duplicate reports; different issues can remain separate cases
+
+                                                       3 · AI investigates and recommends
+       Review shipment data, evidence, priority, permissions and available recovery actions; show proposed next step to office
+
+                                                                                         staff
+
+                                              4 · Staff chooses whether to activate AI recovery
+                          Staff approves the suggested service/action; if declined, case stays on manual handling route
+
+                                                      5 · AI executes within approved limits
+                  Contacts customer or seller as applicable, uses validated backend tools, creates tasks and sends updates
+
+                                                           6 · Physical work + verification
+      Rider/operations complete assigned work; AI monitors statuses, escalates blockers and closes only after verified outcome
+
+Key distinction
+
+Office-staff approval activates the proposed AI service; it does not replace customer consent, seller authorization,
+courier policy checks, or physical delivery confirmation.
+
+ParcelCare · Mentor review · Working product proposal                                                                           1
+ParcelCare | Case-Specific Autonomy
+
+02 What the AI does after staff approval
+
+A · Wrong address -- courier-controlled recovery
+
+                                                            AI proposes address recovery
+                            Staff sees: "I can contact the customer, confirm a new address, and coordinate redelivery."
+
+                                      Staff approves AI contacts customer
+Customer supplies and confirms corrected address; AI checks delivery zone, parcel state and available slots
+
+                                          AI updates and schedules
+Only permitted changes are applied; backend creates a redelivery task and notifies customer/rider
+
+                                                       Rider delivers AI verifies outcome
+                                 Track task completion and delivery proof; unresolved or invalid requests go to staff
+
+B · Wrong item / damaged parcel -- seller-dependent recovery
+
+                                                           AI proposes seller coordination
+                  Staff sees: "I can collect evidence and contact the registered seller for return/replacement authorization."
+
+                      Staff approves AI contacts verified seller
+For demo: teammate replies in an internal Seller Chat Simulator, not through real SMS
+
+                                   AI checks seller decision and required permissions
+
+Seller may approve return/replacement, request evidence, decline or defer; uncertain liability or unclear authority is
+                                                                           escalated
+
+                                               AI creates authorized operational tasks
+Return pickup / replacement transport only when prerequisites are satisfied; rider handles physical collection and delivery
+
+                                                 AI tracks outcome and escalates exceptions
+                     Replacement "promised" is not "ready"; case closes only after required return/delivery confirmations
+
+AI autonomy boundary
+
+AI can investigate, message, interpret replies, plan and invoke controlled tools. It cannot independently approve
+refunds, decide contested liability, invent seller consent, or mark an unfinished shipment as resolved.
+
+ParcelCare · Mentor review · Working product proposal                                                                           2
+ParcelCare | Architecture & Business Proposal
+
+03 Practical 2-day MVP stack
+
+Frontend              React / Next.js + TypeScript + Tailwind + shadcn/ui; Customer, Rider and Office Staff
+Backend               dashboards; internal Seller Simulator for demo.
+AI
+Data + evidence       FastAPI (Python): case APIs, authorization gates, shipment operations, event-driven
+Deployment            agent triggers and tool execution.
+
+                      OpenAI API with function calling; persistent case state; AI produces recommendations
+                      and invokes only approved tools.
+
+                      Supabase PostgreSQL for shipments, cases, messages, approvals, tasks, events;
+                      Supabase Storage for evidence; optional Realtime.
+
+                      Next.js on Vercel; FastAPI on a Python-capable host; Supabase hosted project. Use test
+                      data and mock dispatch/seller services.
+
+Technical interaction
+
+                                                      Next.js dashboards + Seller Simulator
+                                               Complaint, rider report, staff approval, seller reply, case timeline
+
+                                              FastAPI + policy/permission checks
+                  Creates or matches cases; records approvals; validates AI tool calls; writes task updates
+
+                                       OpenAI Agent Supabase + backend tools
+Investigates, suggests, communicates, resumes on new events; updates only through controlled FastAPI actions
+
+04 Paid business-plan concept (proposal, not finalized)
+
+Base plan             Manual exception management, dashboards, case visibility and status tracking.
+
+AI Recovery plan      AI recommendations, staff-approved recovery execution, seller/customer follow-up
+                      and audit trail.
+
+Future advanced plan  Pre-approved policy automation for eligible low-risk cases, with spending/authority
+                      limits and exception-only staff review.
+
+Commercial and product considerations
+
+Charge the logistics company, not the customer, for an optional AI recovery capability. Test whether customers
+value reduced handling time and higher recovery completion enough to pay. Pricing is not yet validated. Requiring
+staff approval for every case may reduce automation benefits; policy-based opt-in is a potential next step.
+
+48-hour MVP boundary
+
+ParcelCare · Mentor review · Working product proposal                                                                3
+Build: one working wrong-address flow, seller-chat approval simulation for wrong item, damage
+evidence/escalation, 3 dashboards, approval gate, task creation and audit log. Exclude: real SMS, live warehouse
+integrations, refunds, automated liability judgments and production-grade billing.
+
+ParcelCare · Mentor review · Working product proposal                                                             4
+
