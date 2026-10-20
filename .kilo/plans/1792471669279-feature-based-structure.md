@@ -7,7 +7,7 @@ Reviewed against ParcelCare.zip. Canonical architecture: [Phase 3](../../Phase3_
 - Keep design tokens in frontend/src/shared/design-system/.
 - Backend owns authorization, policy, state transitions, controlled tools and persistence.
 - Keep all four existing phase folders at root; do not duplicate under docs/.
-- Current folders are a scaffold, not working apps. No dev command, API, database or AI integration exists yet.
+- Reporting/triage now has working local frontend/API/database behavior and tests. Live Supabase, Render deployment and AI integration remain pending; see docs/demo-setup.md.
 - Use the PDF's proposed stack. Do not represent a Python backend as an npm workspace.
 - Preserve original ZIP and extracted references.
 

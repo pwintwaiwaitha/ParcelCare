@@ -1,3 +1,3 @@
 # Design system
 
-Canonical proposed tokens and accessibility/viewport constraints are in Phase2_UIUX/design.md. Implement shared tokens and primitives here when initializing the frontend.
+Shared semantic UI primitives, brand, badges, sign-in and formatting live here. CSS variables/layout rules live in src/app/globals.css. Phase2_UIUX/design.md records the first-flow CSS implementation and remaining accessibility acceptance. Tailwind/shadcn are deferred.

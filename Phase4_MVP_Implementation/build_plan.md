@@ -1,9 +1,11 @@
 # Phase 4 - MVP implementation checklist
 
-Status: documentation and directory scaffold only. All application delivery items below are pending.
+Status: first reporting/triage flow implemented and tested from the local app against live Supabase Auth/PostgreSQL/Storage, including concurrent retry/version checks. Render deployment, team acceptance and later recovery milestones remain pending. See [setup](../docs/demo-setup.md) and [contract](../docs/first-flow-contract.md).
+
+Execution tracker: [feature milestones and team testing](feature_milestones.md). Deliver each usable flow through requirements, screen design, technical contracts, implementation, deployment and every teammate's test before marking it accepted. Initial two-hour target is deployed reporting/triage, not the complete recovery MVP.
 
 ## Foundations
-- [ ] Initialize Next.js/TypeScript frontend and FastAPI backend independently; pin dependencies and document verified startup commands.
+- [x] Initialize Next.js/TypeScript frontend and FastAPI backend independently; pin dependencies and document verified startup commands.
 - [ ] Add secret-free environment examples, Supabase migrations, scoped auth/storage policies and synthetic seed data.
 - [ ] Implement customer/rider/staff route shells, health endpoint and Phase 2 tokens/layouts.
 - [ ] Seed authenticated demo identities and enforce backend ownership/assignment/permission checks; a frontend role switch must not grant authority.

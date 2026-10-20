@@ -1,6 +1,6 @@
 # Phase 1 - Product requirements
 
-Status: reviewed specification; software not implemented.
+Status: reviewed specification; reporting/triage implemented and tested locally. Hosted deployment and recovery features remain pending.
 
 ## Baseline
 The PDF in extracted/ParcelCare/ defines the current MVP. AI investigates and recommends; authorized staff activates bounded recovery; physical completion and verification remain required. Staff approval never substitutes for customer confirmation, verified seller authorization or delivery proof.
@@ -58,4 +58,7 @@ When waiting for a seller, keep IN_PROGRESS and record waiting_on=SELLER plus a 
 
 ## Phase 1 exit gate
 Each MVP flow has an actor, prerequisite, allowed action, outcome and escalation path. Demo policy defaults are explicit, and the broader exception catalog is distinguished from implemented recovery scope.
+
+## Agreed implementation scope — 2026-10-20
+Staff can complete recovery manually inside ParcelCare after declining AI, using the same consent, eligibility and verification rules. The wrong-item demo uses one return-then-replacement sequence. Broader source exception categories are selectable and enter manual triage; automated recovery for them remains outside MVP scope. Render is the selected deployment target. See [feature milestones](../Phase4_MVP_Implementation/feature_milestones.md) for delivery gates and remaining specification work.
 

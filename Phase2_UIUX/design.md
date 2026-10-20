@@ -1,6 +1,6 @@
 # Phase 2 - Interfaces and design system
 
-Status: design specification; screens not implemented.
+Status: reporting/triage screens implemented and smoke-tested locally; recovery screens remain specifications. See docs/demo-setup.md for verification limits.
 
 ## Relevant skill
 Apply MengTo's [design-first-ui-prompting](https://github.com/MengTo/Skills/blob/main/agent-skills/ui/design-first-ui-prompting/SKILL.md): define persona, success criteria, layout, typography, color, copy and constraints before screen generation. Reviewed for this revision; not installed locally. Game, shader, 3D and marketing-page workflows are outside this operational application's needs.
@@ -8,7 +8,7 @@ Apply MengTo's [design-first-ui-prompting](https://github.com/MengTo/Skills/blob
 ## Shared design constraints
 Minimal operational UI. Proposed tokens: background #F8FAFC, surface #FFFFFF, text #0F172A, primary action #1D4ED8; spacing 4/8/12/16/24/32px. System sans-serif, body 16px with 1.5 line height, headings 24-32px at weight 600. Use blue as action accent; status colors always have text/icon labels.
 
-Tokens belong in frontend/src/shared/design-system/. Implement with Tailwind and shadcn/ui. Check WCAG AA text contrast, keyboard focus, associated labels and actionable inline errors; honor reduced motion.
+Shared UI and formatting belong in frontend/src/shared/design-system/. The first release uses semantic React controls and shared CSS variables in frontend/src/app/globals.css, with a navy/teal palette, instead of adding Tailwind/shadcn before the first flow is testable. This is an implementation simplification, not a claim those libraries are installed. Check WCAG AA text contrast, keyboard focus, associated labels and actionable inline errors; honor reduced motion. Full accessibility acceptance remains pending.
 
 ## Customer: mobile first
 Routes: /customer, /customer/reports/new, /customer/cases/[caseId].
@@ -45,3 +45,6 @@ Provide staff actions to assign a rider, record a blocker, review proof, request
 
 ## Phase 2 exit gate
 Screen specifications cover each Phase 1 action, including waiting, denied/stale approval, blocked task, proof rejection and recovery after a failed request. Routes/navigation are complete and match Phase 3 contracts. Implemented screens must pass the viewport/accessibility checks before UI delivery is marked complete.
+
+## Milestone planning clarification — 2026-10-20
+For the initial demo, approvals have no time-based expiry; the earlier expired display requirement is deferred. Show stale, revoked, declined and closed/consumed states as applicable. Address recovery includes customer address entry/correction, seeded slot selection and explicit confirmation of the exact address version, with validation failures shown inline. Manual handling includes staff actions inside ParcelCare and preserves operational consent and verification gates. See [feature milestones](../Phase4_MVP_Implementation/feature_milestones.md) for the accepted scope and readiness screens required before each delivery.

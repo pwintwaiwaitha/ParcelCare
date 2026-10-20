@@ -2,4 +2,4 @@
 
 Role-scoped case summaries, timeline, status and reopening visibility.
 
-Status: reserved feature boundary; implementation pending.
+Status: CaseDetail.tsx implements scoped report/evidence/timeline display and related-case hints for staff. app/Workspace.tsx composes fetching, polling and role navigation. Reopening remains pending.

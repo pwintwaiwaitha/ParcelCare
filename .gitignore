@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+!.env.local.example
+node_modules/
+.next/
+.venv/
+__pycache__/
+.pytest_cache/
+*.db
+uploads/
+*.tsbuildinfo
+artifacts/
+test-results/
+pytest-cache-files-*/

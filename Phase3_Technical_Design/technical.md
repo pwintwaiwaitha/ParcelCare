@@ -1,6 +1,6 @@
 # Phase 3 - Technical design
 
-Status: proposed architecture and tracked directory scaffold; runtime implementation pending.
+Status: reporting/triage runtimes, initial migration and local tests implemented. Hosted Supabase/Render validation and recovery runtime remain pending. First-flow contracts: [implementation specification](../docs/first-flow-contract.md).
 
 ## Structure
 ```text
@@ -45,6 +45,8 @@ Backend features own router, schemas, service and persistence adapters as needed
 
 ## Proposed stack
 Next.js + TypeScript + Tailwind + shadcn/ui; independent FastAPI Python backend; Supabase PostgreSQL/Storage with optional Realtime; OpenAI function calling through controlled backend tools. Add pinned dependencies, lockfiles and verified startup commands when runtimes are implemented. An npm workspace cannot install/manage the Python backend.
+
+First-flow implementation uses Next.js/TypeScript and shared semantic React/CSS controls; Tailwind/shadcn are deferred. Pinned npm/Python dependency files and working local commands now exist. Browser API requests go through a same-origin Next.js proxy, with backend-only API_INTERNAL_URL and HttpOnly cookies. Render hosts both application services; hosted data/auth/evidence use Supabase. Explicit synthetic local mode uses SQLite and local uploads for verification only and is rejected in hosted mode. OpenAI is intentionally absent until M2.
 
 Frontend -> authenticated FastAPI -> feature service and policy gate -> database/storage -> audit event. Recorded events trigger AI review/resumption. Validate model output and tool arguments against schemas and current permissions. Never expose backend service-role or OpenAI credentials in the browser.
 

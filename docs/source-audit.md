@@ -25,3 +25,6 @@ There was no local SKILL.md or MengTo instruction before review. Current use is 
 
 ## Remaining work
 Implement applications, migrations, auth, recovery tools and tests using Phase 4. This review does not certify runtime behavior because no application exists yet.
+
+## First-flow implementation update — 2026-10-20
+The scaffold-only observations above describe the earlier source review. A Next.js/FastAPI reporting/triage candidate now exists with local synthetic auth, SQLite persistence, evidence controls, initial PostgreSQL migration, Supabase integration code and Render Blueprint. Local policy/browser checks are recorded in [demo setup](demo-setup.md). Live Supabase, deployed Render behavior and team acceptance remain unverified. Recovery, AI and seller workflows remain pending. Shared CSS/React controls are used for the first release; Tailwind/shadcn are deferred.

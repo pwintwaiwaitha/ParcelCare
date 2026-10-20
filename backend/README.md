@@ -1,3 +1,3 @@
 # Backend
 
-Planned independent FastAPI application. Feature services enforce authorization, consent, approval and verified outcomes. Shared infrastructure must not become a business-logic bucket. No runtime or dependency manifest yet. See Phase 3 and Phase 4.
+FastAPI reporting/triage API with trusted role checks, transactional reports/events, retry keys and private evidence. Hosted mode uses Supabase Auth/PostgreSQL/Storage; explicit local test mode uses synthetic identities and SQLite. Recovery execution is not implemented. Setup and deployment: [demo guide](../docs/demo-setup.md). Contracts: [first flow](../docs/first-flow-contract.md).

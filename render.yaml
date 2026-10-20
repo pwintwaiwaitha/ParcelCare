@@ -1,0 +1,41 @@
+# Render Blueprint. No paid services are created by this file.
+# rootDir paths assume ParcelCare/ is the Git repository root.
+services:
+  - type: web
+    name: parcelcare-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.lock.txt
+    startCommand: python -m app.setup migrate && python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /ready
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.12
+      - key: APP_ENV
+        value: production
+      - key: AUTH_MODE
+        value: supabase
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: EVIDENCE_BUCKET
+        value: parcelcare-evidence
+  - type: web
+    name: parcelcare-web
+    runtime: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start -- --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.20.0
+      - key: API_INTERNAL_URL
+        sync: false

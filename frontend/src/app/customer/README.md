@@ -1,3 +1,3 @@
 # Customer routes
 
-Reserved route composition for the customer interface. Compose business features; see Phase 2 for screens and responsive acceptance criteria. Implementation pending.
+[[...view]]/page.tsx composes the customer workspace, report form and case details. Backend identity determines access. First-flow screens are locally tested; deployment and recovery remain pending.
