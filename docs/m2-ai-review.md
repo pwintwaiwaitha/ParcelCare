@@ -31,3 +31,7 @@ Render: set `GROQ_API_KEY` in **parcelcare-api → Environment**, save and redep
 - Team must test clear wrong address, missing information, potential duplicates, contradictory reports and manual-only categories, plus quota failure/manual continuation.
 - This implementation sends text/metadata only. Image consistency evaluation and recovery approval/execution remain outside this milestone's runtime.
 - Public deployment and team acceptance must be recorded before calling M2 complete.
+
+## Render verification — 2026-10-20
+
+User confirmed backend Groq environment setup and deployment. Public API readiness returned HTTP 200 and its OpenAPI schema includes the AI review endpoint. The browser test against https://parcelcare-web.onrender.com passed with a synthetic customer report and a real Groq review: seven findings displayed, review persisted after reload, customer AI access returned 403, light/dark rendering worked, and case status/version remained OPEN/1. Deployed feature source is commit 87709a1. Team acceptance, broader evaluation scenarios and category correction remain pending; M2 is DEPLOYED / TESTING, not ACCEPTED.
