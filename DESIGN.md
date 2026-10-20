@@ -110,4 +110,4 @@ Keep one set of rules per component rather than adding a second stylesheet full 
 - [ ] Keyboard focus is visible; table headers, navigation and form labels have meaningful semantics.
 - [x] Existing three-role reporting/triage browser smoke passes after the visual changes (sequential run against live Supabase).
 - [x] Revised screenshots and remaining limits are recorded in docs/design-review.md; the earlier first-flow screenshots provided the audit baseline. Teammate visual review remains pending.
-- [ ] Push/deploy only to the user's selected deployment repository; do not accidentally deploy a design change through the original team remote.
+- [x] Revision 70d395f pushed to htoomyatmineain/ParcelCare and published on Render; original team remote preserved. Read-only design review also passed on the published site.

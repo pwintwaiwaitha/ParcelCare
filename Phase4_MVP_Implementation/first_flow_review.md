@@ -26,3 +26,6 @@ Outstanding release steps: record Render's deployed SHA and every teammate's res
 The ignored backend/.env now uses AUTH_MODE=supabase and the configured PostgreSQL URI. APP_ENV remains local so the localhost frontend can use HTTP cookies; Render must use APP_ENV=production. Sign out and back in after switching: previous local test sessions are not Supabase sessions. Fixed setup handling for Supabase Storage's HTTP 400 / embedded 404 missing-bucket response, and protected the migration ledger with RLS/revoked browser access.
 
 Later milestones remain unimplemented: recovery execution/verification, OpenAI seven-check review, seller simulator, customer replies, complete manual recovery tasks, duplicate linking and reopening. The first-flow triage UI cannot resolve cases.
+
+## Visual revision
+User confirmed customer/rider mobile first and staff desktop first. Revision 70d395f adds canonical DESIGN.md, separate role shells, staff desktop table/two-column detail layout and readable typography. Production build, sequential full reporting regression, and local plus deployed design review passed. See [design review](../docs/design-review.md). Teammate acceptance is still pending.

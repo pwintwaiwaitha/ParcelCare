@@ -21,4 +21,4 @@
 
 ## Deployment
 
-Both final local browser suites passed. Preparing the revision for the user's htoomyatmineain/ParcelCare deployment repository; original team origin is preserved and deployment is a separate Git remote. Render publication and live verification of this revision remain pending until observed. Do not mark teammate visual review complete automatically.
+Both final local browser suites passed. Revision **70d395f** was pushed to htoomyatmineain/ParcelCare through the separate deployment remote; original team origin is preserved. Render now serves the revised assets at https://parcelcare-web.onrender.com. `TEST_BASE_URL=https://parcelcare-web.onrender.com node tests/design-review.cjs` passed against the published site, covering the desktop queue/two-column case layout, mobile reporter layouts, typography minimums, intended contrast pairs and 200% root text resizing. Teammate visual review and full accessibility acceptance remain pending.
