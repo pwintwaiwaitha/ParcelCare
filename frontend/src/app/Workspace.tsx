@@ -17,6 +17,7 @@ import ReportForm from "@/features/exception-reporting/ReportForm";
 import TriageForm from "@/features/recovery-review/TriageForm";
 import CaseDetail from "@/features/case-tracking/CaseDetail";
 import StaffQueue from "@/features/case-tracking/StaffQueue";
+import ThemeToggle from "@/shared/design-system/ThemeToggle";
 
 export default function Workspace({ expectedRole }: { expectedRole?: string }) {
   const router = useRouter(),
@@ -241,9 +242,12 @@ export default function Workspace({ expectedRole }: { expectedRole?: string }) {
                     : "My cases"}
             </strong>
           </span>
-          <div className="live-indicator">
-            <i />
-            {user.local_demo ? "Local test mode" : "Shared workspace"}
+          <div className="topbar-actions">
+            <div className="live-indicator">
+              <i />
+              {user.local_demo ? "Local test mode" : "Shared workspace"}
+            </div>
+            <ThemeToggle />
           </div>
         </header>
         <main>

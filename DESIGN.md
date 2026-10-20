@@ -2,6 +2,12 @@
 
 Updated 2026-10-20. Canonical visual specification for the reporting/triage demo and subsequent feature slices. Product authority and recovery rules remain in Phase1_PRD/requirements.md; screen behavior remains in Phase2_UIUX/design.md. If older visual guidance conflicts, this file takes precedence. This is a design contract, not a claim that all future screens exist.
 
+## Reference adaptation and selected brand
+
+The supplied Kinn Htout DESIGN.md informs inset grouping, restrained weights, squircle geometry, layered surfaces and distinct mobile/console shells. It is reference material for another product, not authority to add civic features, roles or workflow states. Mapping: [docs/design-reference-adaptation.md](docs/design-reference-adaptation.md).
+
+User-selected exact colors: **teal #08A6A5** and **yellow #FCC829**. Approximate alternatives in the user's message are not additional tokens. Support light and dark themes, **default light**. This reference refresh is implemented as a candidate; its verification/publication record is in docs/design-review.md. Previous release checks do not automatically certify the new theme system.
+
 ## People, devices and success
 
 | Interface | Primary context | Successful design |
@@ -18,13 +24,13 @@ The first release rendered important labels, timestamps and descriptions at 8-12
 
 ## Visual direction
 
-Calm, legible delivery operations. White work surfaces on a cool neutral page; navy for orientation; teal for the primary action. Use borders and spacing for grouping, not extra colored cards. Keep the existing ParcelCare identity; no stock illustrations, hero graphics, decorative gradients or remote font dependency are needed in the workflow.
+Calm, legible delivery operations. Light mode uses white work surfaces on a cool neutral page; dark mode uses layered near-black surfaces. Teal identifies primary actions; yellow provides restrained emphasis. Use borders and spacing for grouping, not extra colored cards. Keep the existing ParcelCare identity; no stock illustrations, hero graphics, decorative gradients or remote font dependency are needed in the workflow.
 
 The hierarchy on every screen is: location/context -> page title and current state -> task content -> primary action -> supporting details. On staff case detail, the issue, tracking ID and status lead; report text and triage controls follow. On reporter case detail, the saved status and public timeline lead. Never make a small label carry the only explanation of a required action.
 
 ## Typography
 
-Font: `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`. Use actual available weights 400/500/600/700. Do not synthesize a thin brand/body weight or introduce multiple font families for visual variety. Tracking IDs may use a system monospace stack; numbers use tabular figures.
+Font: `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`. Use actual available weights 400/500/600; headings and metrics use restrained 600 weight. Do not synthesize a thin brand/body weight or introduce multiple font families for visual variety. Tracking IDs may use a system monospace stack; numbers use tabular figures.
 
 | Token | rem / default px | Weight | Line height | Use |
 | --- | --- | --- | --- | --- |
@@ -33,31 +39,42 @@ Font: `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", 
 | body | 1 / 16 | 400 | 1.6 | Report text, descriptions, timelines, form input |
 | label | 0.875 / 14 | 600 | 1.5 | Visible field labels and column headings |
 | section | 1.25 / 20 | 600 | 1.3 | Card and section titles |
-| page-mobile | 1.75 / 28 | 700 | 1.2 | Mobile page title |
-| page-desktop | 2 / 32 | 700 | 1.2 | Staff desktop title |
-| metric | 1.75 / 28 | 700 | 1.2 | Supporting summary counts |
+| page-mobile | 1.75 / 28 | 600 | 1.2 | Mobile page title |
+| page-desktop | 2 / 32 | 600 | 1.2 | Staff desktop title |
+| metric | 1.75 / 28 | 600 | 1.2 | Supporting summary counts |
 
 These are ParcelCare design choices, not WCAG-mandated font sizes. No application text below 13px at default browser settings. Inputs remain 16px on phones. Meaningful content must not shrink at mobile breakpoints. Paragraph measures target 45-75 characters when space permits. Sentence case for statuses/labels; uppercase is limited to short context labels with modest tracking. Use at most one h1 per view and logical h2/h3 levels.
 
-## Color tokens
+## Color and theme tokens
 
-| CSS token | Value | Role |
-| --- | --- | --- |
-| --navy | #142B38 | Navigation and orientation |
-| --ink | #16323D | Main text |
-| --muted | #52636B | Supporting readable text |
-| --teal | #106F65 | Primary button and action links |
-| --bg | #F4F7F7 | Page canvas |
-| --white | #FFFFFF | Cards, table, inputs |
-| --line | #DCE5E5 | Grouping borders; not a text color |
+| Semantic token | Light | Dark | Use |
+| --- | --- | --- | --- |
+| --brand | #08A6A5 | #08A6A5 | Exact primary brand fill |
+| --highlight | #FCC829 | #FCC829 | Exact yellow emphasis; never the only indication of priority |
+| --on-brand | #062E2D | #062E2D | Readable label on the exact teal; white on that fill is insufficient for small labels |
+| --brand-hover | #007775 | #27BEB9 | Derived interactive fill |
+| --on-brand-hover | #FFFFFF | #062E2D | Label contrast on the theme's hover fill |
+| --brand-ink | #006B69 | #65DDD5 | Links, active text and section context |
+| --brand-wash | #E2F4F2 | #123B38 | Inset brand surfaces |
+| --ink | #182B30 | #EDF4F4 | Primary body/heading text |
+| --muted | #52636B | #A4B4B8 | Readable supporting text |
+| --bg | #F5F7F7 | #171717 | Page canvas |
+| --surface | #FFFFFF | #1C1C1C | Cards, table and header |
+| --surface-muted | #EEF2F2 | #101414 | Input/inset/table-header surface |
+| --surface-hover | #F0F7F6 | #242B2B | Quiet hover/interactive layer |
+| --line | #D9E2E2 | #364040 | Grouping dividers |
+| --control-border | #829799 | #6A7C7D | Input and outlined control boundaries |
+| --focus | #007674 | #65DDD5 | Visible focus ring |
 
-Use white text on teal for the primary button. Open uses dark amber on pale amber; triaged/in progress dark blue on pale blue; waiting dark purple on pale purple; escalated/urgent dark red on pale red; verified resolved dark green on pale green. Status always includes readable text. LOW/NORMAL/HIGH/URGENT priority never relies on a colored dot alone. Muted text is still information, not decoration.
+Colors belong in CSS custom properties. JSX components use semantic classes; no per-component palette literals. Status palettes also have independent theme tokens: warning (open/high priority), info (triaged/in progress), waiting (customer/rider waits), danger (escalated) and success (verified resolved). All status/priority labels remain visible and retain ParcelCare's real lifecycle. Yellow is a supporting accent rather than body text on white. Do not copy civic status keys or assume approximate contrast figures from the reference are correct.
 
-Normal text must meet 4.5:1 contrast, and qualifying large text 3:1. Verify actual foreground/background pairs rather than assume a token passes everywhere. Text resizing to 200% must retain content and actions. Sources: [W3C contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [W3C resize text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). These sources support accessibility requirements; the visual style and type scale are project decisions.
+Theme behavior: root data-theme is light unless a user explicitly saved dark. An accessible toggle is available before sign-in and in each workspace. Persist only `parcelcare-theme=light|dark` in localStorage; no credentials, reports or evidence are stored there. Restore preference before hydration to avoid an avoidable light flash. If storage is blocked, changing theme still works for the open page. Account permissions do not depend on theme. Native controls use the matching color-scheme. Both themes need the same screens, error states, focus and workflow checks.
+
+Normal text must meet 4.5:1 contrast, and qualifying large text 3:1. Verify actual foreground/background pairs, including hover/focus, rather than assume a token passes everywhere. Text resizing to 200% must retain content and actions. Sources: [W3C contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [W3C resize text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). Accessibility requirements come from these sources; the visual style and type scale are project decisions.
 
 ## Space, surfaces and controls
 
-Spacing scale: 4/8/12/16/24/32/48px. Page gutters: 16px on phone, 24px on tablet, 32px on desktop. Panel padding: 20px phone, 24px desktop. Section gaps: 24px phone, 32px desktop. Border radius: 12px for cards, 8px for controls, 6px for badges. Avoid nested cards unless they represent genuinely separate objects.
+Spacing scale: 4/8/12/16/24/32/48px. Page gutters: 16px on phone, 24px on tablet, 32px on desktop. Panel padding: 20px phone, 24px desktop. Section gaps: 24px phone, 32px desktop. Radius scale: 10px base, 14px inset cards/tables, 18px floating navigation, 8px input/button controls and 6px badges. Avoid nested cards unless they represent genuinely separate objects.
 
 Controls and tappable navigation provide at least a 44px target; customer/rider primary buttons use 48px. Form labels stay visible above controls. Placeholder text supplements labels. Error messages identify the problem and recovery action, appear near the action and use role=alert. Success confirmations use role=status. Focus is a high-contrast 3px outline with offset, visible on light and dark surfaces. Buttons have explicit disabled states, and busy labels explain the current operation.
 
@@ -65,7 +82,7 @@ Controls and tappable navigation provide at least a 44px target; customer/rider 
 
 ### Customer and rider
 
-Base layout is a compact brand/account header, single-column content and bottom navigation for Cases and Report. Bottom navigation respects device safe areas; reserve enough content padding so it never covers the submit button or final timeline item. At 768px and above, navigation may move into the header, while content remains an easy-to-read centered workspace instead of becoming a staff dashboard.
+Base layout is a compact brand/account header, single-column content and floating rounded navigation for Cases and Report. Bottom navigation respects device safe areas; reserve enough content padding so it never covers the submit button or final timeline item. At 768px and above, navigation moves into the header, while content remains an easy-to-read centered workspace instead of becoming a staff dashboard.
 
 Reports use a centered form no wider than 760px. Case detail is a single readable flow: title/status -> report context -> timeline -> next-step explanation. Summary counts are secondary; they must not push the main task far below the fold. Long issue labels and addresses wrap naturally. On a phone, case cards place the issue/tracking first and status/update underneath rather than compressing both into narrow side-by-side columns.
 
@@ -98,16 +115,17 @@ Every data screen must distinguish loading, empty, no search results, failed req
 
 `frontend/src/app/globals.css` owns shared tokens and breakpoint rules. Role shell selectors are explicit: app-shell--reporter and app-shell--staff. Route composition selects the shell; feature components use shared primitives. Staff table is a separate presentational component. API policy, status transitions, polling and idempotency remain unchanged by this design revision.
 
-Keep one set of rules per component rather than adding a second stylesheet full of conflicting overrides. New components must use this scale. A visual change should include representative screenshots and state checks, not a new unit test for each CSS declaration.
+Keep theme values in the root light/dark token blocks, with shared component rules rather than duplicate per-theme component styles. New components must use this scale. A visual change should include representative screenshots and state checks, not a new unit test for each CSS declaration.
 
-## Delivery checklist for this revision
+## Delivery checklist for the teal/yellow reference refresh
 
-- [x] Staff retains sidebar, aligned queue and two-column case detail at 1024/1440px.
-- [x] Customer/rider remain readable and usable at 320/375/390/768px; safe-area/content padding reserves space for bottom navigation.
-- [x] Important report/timeline text is 16px, labels/table data at least 14px, helper text at least 13px.
-- [x] Token contrast checks cover body, muted text, labels, status backgrounds and primary buttons. This is not a full accessibility certification.
-- [x] Browser checks at 200% root text size preserve page reflow and the staff save action. Full assistive-technology review remains pending.
-- [ ] Keyboard focus is visible; table headers, navigation and form labels have meaningful semantics.
-- [x] Existing three-role reporting/triage browser smoke passes after the visual changes (sequential run against live Supabase).
-- [x] Revised screenshots and remaining limits are recorded in docs/design-review.md; the earlier first-flow screenshots provided the audit baseline. Teammate visual review remains pending.
-- [x] Revision 70d395f pushed to htoomyatmineain/ParcelCare and published on Render; original team remote preserved. Read-only design review also passed on the published site.
+- [x] Exact brand values and derived text/hover tokens are used in both themes.
+- [x] Default light, explicit theme switching, reload persistence and blocked-storage fallback are verified.
+- [x] Login, reporter cases/forms/details, staff queue/detail and error/empty states are checked in both themes.
+- [x] Customer/rider 320/375/390/768px and staff 768/1024/1440px reflow correctly; staff retains desktop table and two-column case detail from 1024px.
+- [x] Tested text/status/primary/hover token pairs meet 4.5:1 contrast, and control/focus boundaries meet 3:1. Body/input text remains 16px, labels/table data 14px, captions at least 13px. Full accessibility certification remains outside the smoke checks.
+- [x] Keyboard theme switching has visible focus and a meaningful accessible name; 200% root text resizing retains controls.
+- [x] Sequential reporting/triage smoke passes in both themes without changes to backend permissions or workflow.
+- [ ] Selected deployment repository publishes the revision; live theme checks pass. Team acceptance remains a separate gate.
+
+Historical first design revision: 70d395f was deployed and tested. That evidence is preserved in docs/design-review.md but does not complete this refresh's checklist.

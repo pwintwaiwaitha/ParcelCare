@@ -35,6 +35,8 @@ Status vocabulary: NOT STARTED -> SPEC READY -> BUILDING -> DEPLOYED / TESTING -
 
 Human feature owners and teammate test results remain UNASSIGNED/pending. Frontend: https://parcelcare-web.onrender.com ; backend: https://parcelcare-api.onrender.com . Record Render's actual deployed commit SHA during team testing; the reviewed source baseline is d6efa5a.
 
+2026-10-20 update: user confirmed team testing is still in progress. The reference-based teal/yellow light/dark refresh is tracked in DESIGN.md and docs/design-review.md. M2 readiness and missing backend API credentials are recorded in docs/m2-readiness.md; M0/M1 remain DEPLOYED / TESTING.
+
 | ID | Usable milestone / MVP feature | Depends on | Status |
 | --- | --- | --- | --- |
 | M0 | Render deployment, seeded sign-in, three role shells, persistent shipment access | Hosting/data setup | DEPLOYED / TESTING — teammate acceptance pending |

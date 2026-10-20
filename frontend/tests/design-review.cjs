@@ -45,34 +45,7 @@ async function readable(page) {
   assert.deepEqual(result.tiny, [], "Text smaller than the design minimum");
 }
 
-function luminance(hex) {
-  const rgb = hex
-    .replace("#", "")
-    .match(/../g)
-    .map((n) => parseInt(n, 16) / 255)
-    .map((n) => (n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4));
-  return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
-}
-for (const [fg, bg] of [
-  ["#16323d", "#ffffff"],
-  ["#52636b", "#ffffff"],
-  ["#52636b", "#f4f7f7"],
-  ["#ffffff", "#106f65"],
-  ["#805800", "#fff3d6"],
-  ["#265c89", "#e8f2ff"],
-  ["#933922", "#fff0eb"],
-  ["#68448a", "#f2ecfa"],
-  ["#28623f", "#e9f5ec"],
-  ["#c8d9de", "#142b38"],
-  ["#105e55", "#e4f2ed"],
-]) {
-  const a = luminance(fg),
-    b = luminance(bg);
-  assert.ok(
-    (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) >= 4.5,
-    `Contrast fails: ${fg} / ${bg}`,
-  );
-}
+// Actual light/dark token contrast is checked by theme-review.cjs.
 
 async function run() {
   const browser = await chromium.launch({
@@ -204,7 +177,7 @@ async function run() {
     }
     assert.deepEqual(issues, []);
     console.log(
-      "PASS: role-specific layouts, desktop table/two-column cases, 13px minimum text, 16px inputs, token contrast, viewport reflow and 200% text resizing.",
+      "PASS: role-specific layouts, desktop table/two-column cases, 13px minimum text, 16px inputs, viewport reflow and 200% text resizing.",
     );
   } finally {
     await browser.close();

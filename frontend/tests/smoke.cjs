@@ -31,6 +31,10 @@ async function login(browser, role, width) {
   const page = await context.newPage();
   page.on("pageerror", (error) => issues.push(error.message));
   await page.goto(base);
+  const theme = process.env.TEST_THEME || "light";
+  if (await page.locator("html").getAttribute("data-theme") !== theme) {
+    await page.getByRole("button", { name: `Switch to ${theme} theme` }).click();
+  }
   await page
     .getByLabel("Email address")
     .fill(
