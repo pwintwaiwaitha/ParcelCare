@@ -41,7 +41,7 @@ Human feature owners and teammate test results remain UNASSIGNED/pending. Fronte
 | --- | --- | --- | --- |
 | M0 | Render deployment, seeded sign-in, three role shells, persistent shipment access | Hosting/data setup | DEPLOYED / TESTING — teammate acceptance pending |
 | M1 | Customer/rider reporting, evidence, staff triage, own-case tracking | M0 | DEPLOYED / TESTING — teammate acceptance pending |
-| M2 | Live structured AI triage with seven checks and manual fallback | M1 | NOT STARTED |
+| M2 | Live structured AI triage with seven checks and manual fallback | M1 | BUILDING — Groq backend/UI implemented; deployment and team acceptance pending |
 | M3 | Wrong-address recovery through verified redelivery | M2 | NOT STARTED |
 | M4 | Complete manual recovery, duplicate review and reopening paths | M3 | NOT STARTED |
 | M5 | Wrong-item seller simulation, return then replacement | M4 | NOT STARTED |

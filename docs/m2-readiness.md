@@ -1,6 +1,6 @@
 # Readiness for M2: seven AI checks
 
-2026-10-20. This is a readiness assessment, not authorization or a claim that M2 is implemented.
+2026-10-20. M2 is now BUILDING with Groq following the user's provider choice. Runtime contract and deployment steps: [M2 AI review](m2-ai-review.md). OpenAI API testing returned exhausted credit; Groq live synthetic structured generation passed. The key stays backend-only.
 
 ## Ready foundation
 

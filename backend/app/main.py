@@ -25,6 +25,19 @@ DB = Annotated[DBSession, Depends(db_session)]
 User = Annotated[Profile, Depends(current_user)]
 Key = Annotated[str, Header(alias='Idempotency-Key', min_length=8, max_length=100)]
 
+from .features.cases import ai_review
+
+class AIReviewRequest(BaseModel):
+    version: int = Field(ge=1)
+
+@app.get('/cases/{case_id}/ai-review')
+def latest_ai_review(case_id: UUID, db: DB, user: User):
+    return ai_review.latest(db,user,str(case_id))
+
+@app.post('/cases/{case_id}/ai-review')
+def request_ai_review(case_id: UUID, body: AIReviewRequest, db: DB, user: User, key: Key):
+    return ai_review.run(db,user,str(case_id),body.version,key)
+
 @app.middleware('http')
 async def security(request: Request, call_next):
     if request.method not in {'GET','HEAD','OPTIONS'} and request.headers.get('x-parcelcare-request') != '1':

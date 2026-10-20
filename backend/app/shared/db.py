@@ -81,5 +81,22 @@ class Evidence(Base):
     mime: Mapped[str] = mapped_column(String(50))
     object_key: Mapped[str] = mapped_column(String(200), unique=True)
 
+class AIReview(Base):
+    __tablename__ = 'ai_reviews'
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    case_id: Mapped[str] = mapped_column(ForeignKey('cases.id'), index=True)
+    actor_id: Mapped[str] = mapped_column(ForeignKey('profiles.id'))
+    request_key: Mapped[str] = mapped_column(String(100))
+    case_version: Mapped[int] = mapped_column(Integer)
+    fingerprint: Mapped[str] = mapped_column(String(64))
+    snapshot: Mapped[str] = mapped_column(Text)
+    model: Mapped[str] = mapped_column(String(100))
+    prompt_version: Mapped[str] = mapped_column(String(40), default='seven-checks-v1')
+    status: Mapped[str] = mapped_column(String(20), default='PENDING')
+    result: Mapped[str | None] = mapped_column(Text, nullable=True)
+    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[str] = mapped_column(String(40), default=now)
+    __table_args__ = (UniqueConstraint('actor_id', 'request_key'), CheckConstraint("status IN ('PENDING','COMPLETED','FAILED')"))
+
 def db_session():
     with Session() as session: yield session
